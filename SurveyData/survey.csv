@@ -1,4 +1,4 @@
-trainnumber,connectionnumber,crowding,crowdingAmount,weekday,from,fromURL
+trainnumber,connectionnumber,crowding,crowdingAmount,weekday,from,to
 S103857,1,?,2,1,http://irail.be/stations/NMBS/008893401,http://irail.be/stations/NMBS/008893443
 S103857,2,?,2,1,http://irail.be/stations/NMBS/008893443,http://irail.be/stations/NMBS/008812161
 S103857,3,?,2,1,http://irail.be/stations/NMBS/008812161,http://irail.be/stations/NMBS/008812153
