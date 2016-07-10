@@ -1,5 +1,12 @@
 <?php
 
+// $argv:
+// 1 = trainnumber (letter(s) + number)
+// 2 = from (uri)
+// 3 = to (uri)
+// 4 = crowding (0=empty, 1=in between, 2=busy)
+// 5 = weekendorweek (0=weekend, 1=week)
+
 if(count($argv) == 5) {
     $curl = curl_init();
 
@@ -34,15 +41,13 @@ if(count($argv) == 5) {
         }
 
         if($i == 1) {
-            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . ",1" . "," . $stop->station["URI"] . ",";
+            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . ",1" . "," . $argv[5] . "," . $stop->station["URI"] . ",";
         } else if($i != count($stops->stop)) {
             $text .= $stop->station["URI"] . "\n";
-            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . ",1" . "," . $stop->station["URI"] . ",";
+            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . ",1" . "," . $argv[5] . "," . $stop->station["URI"] . ",";
         } else {
             $text .= $stop->station["URI"] . "\n"; 
         }
-
-        //echo($stop->station . " " . $argv[2] . " " . $argv[3] . "\n");
 
         $i++;
     }
