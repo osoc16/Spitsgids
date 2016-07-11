@@ -2,8 +2,8 @@
 
 // $argv:
 // 1 = trainnumber (letter(s) + number)
-// 2 = from (uri)
-// 3 = to (uri)
+// 2 = from
+// 3 = to
 // 4 = crowding (0=empty, 1=in between, 2=busy)
 
 if(count($argv) == 5) {
@@ -24,7 +24,6 @@ if(count($argv) == 5) {
     $errorCheck = 0;
     $text = "";
     $crowding = "?";
-    $i = 1;
 
     foreach($stops->stop as $stop) {
         if($stop->station == $argv[2]) {
@@ -34,21 +33,21 @@ if(count($argv) == 5) {
             $errorCheck += 1;
         }
 
+        if($crowding != "?") {
+            if($stop->station == $argv[2]) {
+                $text .= $argv[1] . "," . $crowding . ",1," . $stop->station["URI"] . ",";
+            } else if($stop->station != $argv[3]) {
+                $text .= $stop->station["URI"] . "\n";
+                $text .= $argv[1] . "," . $crowding . ",1," . $stop->station["URI"] . ",";
+            } else {
+                $text .= $stop->station["URI"] . "\n"; 
+            }
+        }
+
         if($stop->station == $argv[3] && $errorCheck == 1) {
             $errorCheck += 1;
             $crowding = "?";
         }
-
-        if($i == 1) {
-            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . "," . $stop->station["URI"] . ",";
-        } else if($i != count($stops->stop)) {
-            $text .= $stop->station["URI"] . "\n";
-            $text .= $argv[1] . "," . (intval($stop["id"] + 1)) . "," . $crowding . "," . $stop->station["URI"] . ",";
-        } else {
-            $text .= $stop->station["URI"] . "\n"; 
-        }
-
-        $i++;
     }
 
     if($errorCheck != 2) echo "Error: stations niet overlopen\n";
